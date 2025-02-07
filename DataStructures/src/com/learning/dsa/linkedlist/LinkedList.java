@@ -123,4 +123,103 @@ public class LinkedList {
 			return head;
 		}
 	}
+
+	public Node get(int index) {
+
+		if (index < 0 || index >= this.length) {
+			return null;
+		}
+
+		Node temp = this.head;
+
+		for (int i = 0; i < index; i++) {
+			temp = temp.next;
+		}
+		return temp;
+	}
+
+	public void insert(int value, int index) {
+
+		if (index < 0 || index >= this.length) {
+			return;
+		}
+
+		if (index == 0) {
+			Node newNode = new Node(value, this.head);
+			this.head = newNode;
+			this.tail = newNode;
+
+			this.length++;
+
+			return;
+		} else if (index == this.length - 1) {
+			append(value);
+		} else {
+			Node temp = this.head;
+			Node nextNode = this.head.next;
+
+			for (int i = 1; i < index; i++) {
+
+				temp = temp.next;
+				nextNode = temp.next;
+			}
+
+			Node newNode = new Node(value, nextNode);
+			temp.next = newNode;
+
+			this.length++;
+		}
+	}
+
+	public void remove(int index) {
+
+		if (index <= 0 || index >= this.length) {
+			return;
+		}
+
+		if (index == this.length - 1) {
+			removeLast();
+		} else {
+
+			Node prevNode = get(index - 1);
+			Node temp = prevNode.next;
+
+			prevNode.next = temp.next;
+			temp.next = null;
+			this.length--;
+		}
+	}
+
+	public boolean set(int value, int index) {
+
+		Node temp = get(index);
+
+		if (temp != null) {
+			temp.value = value;
+
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public void reverse() {
+
+		Node temp = this.head;
+		System.out.println(temp.next.value);
+		this.head = this.tail;
+		this.tail = temp;
+
+		Node before = null;
+		Node after = temp.next;
+
+		for (int i = 0; i < this.length; i++) {
+			if (temp != null) {
+				after = temp.next;
+				temp.next = before;
+				before = temp;
+				temp = after;
+			}
+		}
+	}
 }
